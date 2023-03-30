@@ -1,0 +1,161 @@
+/*Header*/
+div.header__img {
+  position: relative;
+  background-image: url(../../Img/header.png);
+  display: flex;
+  max-width: 100%;
+  height: 60vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right;
+  padding-bottom: 160px;
+}
+div.header__img div.wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  color: #e8e8e8;
+}
+div.header__img div.wrap div.box {
+  padding-left: 40px;
+  flex-basis: 50%;
+  align-self: center;
+}
+div.header__img div.wrap div.box * {
+  font-family: 'Rubik';
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+div.header__img div.wrap div.box h2 {
+  font-size: 100px;
+}
+div.header__img div.wrap div.box p {
+  font-size: 40px;
+}
+/*Wave*/
+div.header__img:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 2vh;
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(./../../Img/wave.svg);
+}
+/*Container*/
+div.containers img {
+  max-width: 90vw;
+}
+div.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: none;
+  margin: 40px;
+}
+div.container div.flag__container_phone {
+  display: none;
+}
+/*First H1*/
+div.container h1.first__h1 {
+  max-width: 30vw;
+  text-align: right;
+  color: #98b871;
+  font-size: 58px;
+  font-family: 'Rubik';
+}
+/*Second H1*/
+div.container h1.second__h1 {
+  margin-bottom: 40px;
+  max-width: 50vw;
+  text-align: left;
+  color: #98b871;
+  font-size: 58px;
+  font-family: 'Rubik';
+}
+
+/*Last Container and H1*/
+div.last_container h1.third__h1 {
+  margin-bottom: 20px;
+  display: block;
+  width: 100%;
+  font-size: 58px;
+  font-family: 'Rubik';
+  text-align: center;
+  color: #98b871;
+}
+div.last_container div {
+  align-items: center;
+  justify-content: center;
+  padding: auto;
+  display: flex;
+  margin: 40px;
+}
+
+/*Responsive*/
+@media screen and (max-width: 1255px) {
+  div.container {
+    display: block;
+    transition: none;
+  }
+  div.flag__container {
+    display: none;
+  }
+  div.container div.flag__container_phone {
+    align-items: center;
+    justify-content: center;
+    padding: auto;
+    display: flex;
+  }
+  div.container h1.first__h1 {
+    max-width: 100%;
+    text-align: center;
+  }
+  div.container h1.second__h1 {
+    max-width: 100%;
+    text-align: center;
+  }
+  div.container div.div__img {
+    align-items: center;
+    justify-content: center;
+    padding: auto;
+    display: flex;
+  }
+}
+@media screen and (max-width: 955px) {
+  div.container div.flag__container_phone > div.card__div {
+    margin: 80px;
+  }
+  div.container div.flag__container_phone div {
+    display: block;
+  }
+}
+@media screen and (max-width: 575px) {
+  /*Header image size*/
+
+  div.header__img {
+    height: 60vh;
+  }
+  /*Header Font*/
+  div.header__img div.wrap div.box h2 {
+    font-size: 60px;
+  }
+  div.header__img div.wrap div.box p {
+    font-size: 30px;
+  }
+  /*containers*/
+  div.containers {
+    margin-top: -45px;
+  }
+  div.container h1.first__h1,
+  div.container h1.second__h1,
+  div.last_container h1.third__h1 {
+    font-size: 40px;
+  }
+}

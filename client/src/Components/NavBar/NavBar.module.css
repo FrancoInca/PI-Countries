@@ -1,0 +1,37 @@
+div.navBar {
+  justify-content: space-between;
+  background-color: #98b871;
+  padding: 0 5%;
+  display: flex;
+}
+div.navBar div {
+  margin: 10px;
+}
+div.navBar div h1 {
+  display: inline-flex;
+  align-items: center;
+  margin: 10px 15px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 36px;
+  color: #e8e8e8;
+  text-decoration: none;
+}
+div.navBar div.startButtom {
+  background-color: #e8e8e8;
+  padding: 0px 10px;
+  border-radius: 15px;
+  transition: all ease 0.3s;
+  box-shadow: 1.5px 1.5px 3px #c5c5c5, -1.5px -1.5px 3px #ffffff;
+}
+div.navBar div.startButtom h1 {
+  color: #98b871;
+}
+div.navBar div.startButtom:hover {
+  box-shadow: none;
+}
+/*Responsive*/
+@media screen and (max-width: 575px) {
+  div.navBar div h1 {
+    font-size: 24px;
+  }
+}
