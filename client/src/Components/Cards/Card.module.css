@@ -7,6 +7,7 @@ div.card__div {
   text-align: center;
   transition: all ease 0.3s;
 }
+
 div.card__div img {
   position: relative;
   border-radius: 15px;
@@ -15,6 +16,18 @@ div.card__div img {
   width: 250px;
   height: 165px;
   transition: 0.5s;
+}
+div.card__div div.card__top_info {
+  border-radius: 15px 15px 0px 0px;
+  transition: all ease 0.3s;
+  transform: translateY(120%);
+  background-color: white;
+  padding: 5px 5px 25px 5px;
+  max-height: 200px;
+  min-height: 20px;
+}
+div.card__div div.card__top_info h3 {
+  color: #98b871;
 }
 div.card__div div.card__bottom_info {
   border-radius: 0px 0px 15px 15px;
@@ -27,21 +40,11 @@ div.card__div div.card__bottom_info {
   font-weight: 400;
   padding: 20px 5px 5px 5px;
 }
-div.card__div div.card__top_info {
-  border-radius: 15px 15px 0px 0px;
-  transition: all ease 0.3s;
-  transform: translateY(120%);
-  background-color: white;
-  min-height: 20px;
-  max-height: 120px;
-  color: #98b871;
-  font-family: 'Rubik';
-  padding: 5px 5px 20px 5px;
+
+div.card__div:hover div.card__top_info {
+  transform: translateY(30%);
 }
 
 div.card__div:hover div.card__bottom_info {
   transform: translateY(-40%);
-}
-div.card__div:hover div.card__top_info {
-  transform: translateY(30%);
 }

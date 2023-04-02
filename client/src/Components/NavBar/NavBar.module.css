@@ -21,7 +21,7 @@ div.navBar div.startButtom {
   padding: 0px 10px;
   border-radius: 15px;
   transition: all ease 0.3s;
-  box-shadow: 1.5px 1.5px 3px #c5c5c5, -1.5px -1.5px 3px #ffffff;
+  box-shadow: 3px 3px #c5c5c5;
 }
 div.navBar div.startButtom h1 {
   color: #98b871;

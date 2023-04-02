@@ -4,6 +4,7 @@ import Welcome from './Components/Welcome/Welcome';
 import Home from './Components/Home/Home';
 import NavBar from './Components/NavBar/NavBar';
 import Details from './Components/Details/Details';
+import NotFound from './Components/NotFound/NotFound';
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Welcome />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/details" element={<Details />} />
+        <Route path="/home/:page" element={<Home />} />
+        <Route path="/details/:cc" element={<Details />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

@@ -1,0 +1,15 @@
+.go_to_top_button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  background-color: #98b871;
+  color: #e8e8e8;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  font-size: 30px;
+  width: 60px;
+  height: 60px;
+}

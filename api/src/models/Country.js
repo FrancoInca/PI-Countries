@@ -20,16 +20,16 @@ const Country = (sequelize) => {
         allowNull: false,
         unique: true,
       },
-      nombre: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
-      bandera: {
+      flag: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      continente: {
+      continent: {
         type: DataTypes.STRING,
         defaulValue: 'Unknown',
       },
@@ -41,7 +41,7 @@ const Country = (sequelize) => {
         type: DataTypes.INTEGER,
         defaulValue: 0,
       },
-      poblacion: {
+      population: {
         type: DataTypes.INTEGER,
         defaulValue: 0,
       },

@@ -9,11 +9,11 @@ const Activity = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      nombre: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      dificultad: {
+      difficulty: {
         type: DataTypes.INTEGER,
         defaultValue: 1,
         validate: {
@@ -22,7 +22,7 @@ const Activity = (sequelize) => {
           max: 5,
         },
       },
-      temporada: {
+      season: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {

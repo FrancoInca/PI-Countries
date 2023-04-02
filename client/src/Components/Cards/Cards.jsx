@@ -5,7 +5,7 @@ const Cards = (props) => {
   return (
     <ul>
       {props.props.map((e) => (
-        <Card nombre={e.nombre} key={e.id} bandera={e.bandera} capital={e.capital} />
+        <Card name={e.name} key={e.id} flag={e.flag} capital={e.capital} id={e.id} />
       ))}
     </ul>
   );

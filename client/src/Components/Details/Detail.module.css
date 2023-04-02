@@ -1,0 +1,38 @@
+div.card_detail {
+  background-color: #98b871;
+  color: #3f3f3f;
+  display: flex;
+  border-radius: 20px;
+  max-width: 800px;
+
+  justify-content: space-around;
+  align-items: center;
+  align-self: center;
+  text-align: center;
+  margin: auto;
+}
+div.card_detail div.info {
+  margin: 40px;
+  padding: 10px;
+  background-color: #e8e8e8;
+  border-radius: 20px;
+}
+
+div.card_detail img {
+  margin: 20px 0 20px 40px;
+  border-radius: 20px;
+  width: 250px;
+  height: 165px;
+  background-color: blue;
+}
+div.card_detail div div h3 {
+  font-size: 35px;
+  margin: 10px;
+}
+div.card_detail div div h4 {
+  font-size: 25px;
+  margin: 20px;
+}
+div.card_detail div div p {
+  font-size: 20px;
+}

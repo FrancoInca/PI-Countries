@@ -1,0 +1,63 @@
+/* Div container */
+div.div_container {
+  padding-top: 40px;
+  text-align: center;
+}
+
+div.div_container div.div_search *,
+div.div_container div.div_search_bellow * {
+  display: inline-block;
+  margin: 10px;
+}
+
+div.div_container div.div_search a button,
+div.div_container div.div_search_bellow a button {
+  background-color: #98b871;
+  border-radius: 10px;
+  color: #e8e8e8;
+  font-family: 'Rubik';
+  font-size: 40px;
+  height: 60px;
+  width: 60px;
+}
+
+div.div_container div.div_search button:hover,
+div.div_container div.div_search_bellow button:hover {
+  cursor: pointer;
+}
+
+div.div_container div.div_search h1,
+div.div_container div.div_search_bellow h1 {
+  height: 60px;
+  width: 180px;
+}
+
+div.div_container input {
+  border-radius: 10px;
+  font-size: 20px;
+  height: 40px;
+  padding-left: 10px;
+}
+
+div.div_container h1 {
+  color: #98b871;
+  font-size: 40px;
+}
+
+div.div_container h3.error_message {
+  font-size: 40px;
+  margin: 40px;
+}
+
+/* Div home cards */
+div.div_home_cards {
+  margin: auto;
+  max-width: 90%;
+}
+
+/* Media queries */
+@media screen and (max-width: 515px) {
+  div.container h1 {
+    font-size: 30px;
+  }
+}

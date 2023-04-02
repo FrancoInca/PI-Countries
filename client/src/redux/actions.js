@@ -1,15 +1,44 @@
 import axios from 'axios';
 
 const LOAD_COUNTRIES = 'LOAD_COUNTRIES';
+const LOAD_SOME_COUNTRIES = 'LOAD_SOME_COUNTRIES';
+const LOAD_COUNTRY = 'LOAD_COUNTRY';
 
-export function loadCountries() {
+export function loadCountry(countryCode) {
   return async function (dispatch) {
-    const response = await axios.get('http://localhost:3001/countries');
+    const response = await axios.get(`http://localhost:3001/countries/${countryCode}`);
+    const country = response.data;
     return dispatch({
-      type: LOAD_COUNTRIES,
-      payload: response.data,
+      type: LOAD_COUNTRY,
+      payload: country,
     });
   };
 }
 
-export {LOAD_COUNTRIES};
+export function loadCountries(name) {
+  return async function (dispatch) {
+    const baseUrl = `http://localhost:3001/countries/${name ? `search?name=${name}` : ''}`;
+    const response = await axios.get(baseUrl);
+    const countries = response.data;
+    return dispatch({
+      type: LOAD_COUNTRIES,
+      payload: countries,
+    });
+  };
+}
+export function loadSomeCountries() {
+  return async function (dispatch) {
+    const response = await axios.get('http://localhost:3001/countries');
+    const data = response.data;
+    const countries = [];
+    for (let i = 0; i < 3; i++) {
+      const randomIndex = parseInt(Math.random() * 250);
+      countries.push(data[randomIndex]);
+    }
+    return dispatch({
+      type: LOAD_SOME_COUNTRIES,
+      payload: countries,
+    });
+  };
+}
+export {LOAD_COUNTRIES, LOAD_SOME_COUNTRIES, LOAD_COUNTRY};
