@@ -3,7 +3,6 @@ import Styles from './Card.module.css';
 import {Link} from 'react-router-dom';
 
 const Card = (props) => {
-  console.log(props);
   return (
     <Link to={`/details/${props.id}`}>
       <div className={Styles.card__div}>
