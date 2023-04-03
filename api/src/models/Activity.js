@@ -12,6 +12,7 @@ const Activity = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       difficulty: {
         type: DataTypes.INTEGER,
