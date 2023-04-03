@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {loadCountry} from '../../redux/actions';
+import {loadCountryByCC} from '../../redux/actions';
 import {connect} from 'react-redux';
 import Styles from './Details.module.css';
 import Detail from './Detail';
 import Activities from '../Activities/Activities';
 
-const Details = ({loadCountry, countryData}) => {
+const Details = ({loadCountryByCC, countryData}) => {
   const {cc} = useParams();
   const [data, setData] = useState({});
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     const countryToState = async () => {
-      await loadCountry(cc);
+      await loadCountryByCC(cc);
       setData(countryData);
       setMounted(true);
     };
@@ -42,8 +42,8 @@ export function mapStateToProps(state) {
 }
 export function mapDispatchToProps(dispatch) {
   return {
-    loadCountry: function (countryCode) {
-      return dispatch(loadCountry(countryCode));
+    loadCountryByCC: function (countryCode) {
+      return dispatch(loadCountryByCC(countryCode));
     },
   };
 }
