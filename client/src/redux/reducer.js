@@ -1,4 +1,4 @@
-import {LOAD_COUNTRIES, LOAD_SOME_COUNTRIES, LOAD_COUNTRY} from './actions';
+import {LOAD_COUNTRIES, LOAD_SOME_COUNTRIES, LOAD_COUNTRY, LOAD_ACTIVITIES} from './actions';
 const initialState = {
   countries: [],
   countriesWelcome: [],
@@ -13,6 +13,8 @@ const rootReducer = (state = initialState, action) => {
       return {...state, countriesWelcome: action.payload};
     case LOAD_COUNTRY:
       return {...state, countryData: action.payload};
+    case LOAD_ACTIVITIES:
+      return {...state, activities: action.payload};
     default:
       return {...state};
   }
