@@ -23,7 +23,17 @@ const Details = ({loadCountry, countryData}) => {
   return (
     <div className={Styles.div_container}>
       <Detail data={data} />
-      {data.hasOwnProperty(`Activities`) ? <Activities props={data} /> : null}
+
+      {data.hasOwnProperty(`Activities`) ? (
+        <>
+          {data.Activities.length > 0 ? (
+            <h1>The activites you can do in {data.name}!</h1>
+          ) : (
+            <h1>There is no activities for {data.name} right now...</h1>
+          )}
+          <Activities props={data} />
+        </>
+      ) : null}
     </div>
   );
 };

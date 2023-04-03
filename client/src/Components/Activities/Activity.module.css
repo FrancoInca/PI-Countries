@@ -1,0 +1,15 @@
+.container {
+  display: inline-block;
+  background-color: white;
+  box-shadow: 3px 3px 10px black;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
+  max-width: 200px;
+}
+.container .container__difficulty p {
+  padding-top: 10px;
+}
+.container div.container__data {
+  margin: 5px 20px 10px 20px;
+}

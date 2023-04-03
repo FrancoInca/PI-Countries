@@ -1,3 +1,9 @@
 div.div_container {
+  text-align: center;
   margin: 40px;
+}
+div.div_container h1 {
+  margin-top: 40px;
+  font-size: 50px;
+  color: #98b871;
 }

@@ -15,7 +15,6 @@ const Searchbar = ({countries}) => {
   };
   const nextPageValue = nextPage();
   const prevPageValue = prevPage();
-
   return (
     <>
       <Link to={`/home/${prevPageValue}${search}`}>

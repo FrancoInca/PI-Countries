@@ -36,3 +36,24 @@ div.card_detail div div h4 {
 div.card_detail div div p {
   font-size: 20px;
 }
+@media screen and (max-width: 750px) {
+  div.card_detail {
+    display: block;
+    padding: 40px;
+  }
+  div.card_detail div.info {
+    margin: 0px;
+  }
+  div.card_detail img {
+    margin: 0px 0px 20px;
+  }
+}
+@media screen and (max-width: 400px) {
+  div.card_detail img {
+    width: 200px;
+    height: 125px;
+  }
+  div.card_detail div div h3 {
+    font-size: 30px;
+  }
+}

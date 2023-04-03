@@ -4,32 +4,9 @@ div.div_container {
   text-align: center;
 }
 
-div.div_container div.div_search *,
-div.div_container div.div_search_bellow * {
-  display: inline-block;
-  margin: 10px;
-}
-
-div.div_container div.div_search a button,
-div.div_container div.div_search_bellow a button {
-  background-color: #98b871;
-  border-radius: 10px;
-  color: #e8e8e8;
-  font-family: 'Rubik';
+div.div_container h1 {
+  color: #98b871;
   font-size: 40px;
-  height: 60px;
-  width: 60px;
-}
-
-div.div_container div.div_search button:hover,
-div.div_container div.div_search_bellow button:hover {
-  cursor: pointer;
-}
-
-div.div_container div.div_search h1,
-div.div_container div.div_search_bellow h1 {
-  height: 60px;
-  width: 180px;
 }
 
 div.div_container input {
@@ -39,9 +16,57 @@ div.div_container input {
   padding-left: 10px;
 }
 
-div.div_container h1 {
-  color: #98b871;
+div.div_container button {
+  background-color: #98b871;
+  border-radius: 10px;
+  color: #e8e8e8;
+  font-size: 20px;
+  padding: 10px;
+  margin: 20px;
+}
+div.div_container button:hover {
+  cursor: pointer;
+}
+div.div_container div.div_filter {
+  display: flex;
+  background-color: white;
+  max-width: 200px;
+  padding: 20px;
+  border-radius: 20px;
+  align-items: center;
+  margin: auto;
+  justify-content: baseline;
+}
+div.div_container div.div_filter div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+div.div_container div.div_filter button {
+  padding: 10px;
+  margin: 5px 5px 0 5px;
+}
+div.div_container div.div_search * {
+  display: inline-block;
+  margin: 10px;
+}
+
+div.div_container div.div_search h1 {
+  height: 60px;
+  width: 180px;
+}
+
+div.div_container div.div_search a button {
+  background-color: #98b871;
+  border-radius: 10px;
+  color: #e8e8e8;
   font-size: 40px;
+  height: 60px;
+  width: 60px;
+}
+
+div.div_container div.div_search button:hover {
+  cursor: pointer;
 }
 
 div.div_container h3.error_message {
@@ -58,6 +83,17 @@ div.div_home_cards {
 /* Media queries */
 @media screen and (max-width: 515px) {
   div.container h1 {
+    font-size: 30px;
+  }
+  div.div_container div.div_search h1 {
+    font-size: 30px;
+  }
+  div.div_container div.div_search h1 {
+    width: 100px;
+  }
+  div.div_container div.div_search a button {
+    width: 50px;
+    height: 50px;
     font-size: 30px;
   }
 }
