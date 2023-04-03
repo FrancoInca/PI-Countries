@@ -10,7 +10,7 @@
   padding: 10px;
   color: #e8e8e8;
   border: none;
-  border-radius: 50%;
+  border-radius: 50% !important;
   cursor: pointer;
   font-size: 30px;
 }
