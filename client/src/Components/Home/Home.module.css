@@ -1,21 +1,19 @@
 /* Div container */
-div.div_container {
-  padding-top: 40px;
-  text-align: center;
-}
 
+div.div_container {
+  text-align: center;
+  padding-top: 40px;
+}
 div.div_container h1 {
   color: #98b871;
   font-size: 40px;
 }
-
 div.div_container input {
   border-radius: 10px;
+  padding-left: 10px;
   font-size: 20px;
   height: 40px;
-  padding-left: 10px;
 }
-
 div.div_container button {
   background-color: #98b871;
   border-radius: 10px;
@@ -27,35 +25,54 @@ div.div_container button {
 div.div_container button:hover {
   cursor: pointer;
 }
+
+/*Filters*/
+
 div.div_container div.div_filter {
-  display: flex;
+  justify-content: space-between;
   background-color: white;
-  max-width: 200px;
-  padding: 20px;
-  border-radius: 20px;
   align-items: center;
-  margin: auto;
-  justify-content: baseline;
-}
-div.div_container div.div_filter div {
+  border-radius: 20px;
+  width: fit-content;
+  max-width: 500px;
   display: flex;
+  padding: 20px;
+  margin: auto;
+}
+div.div_container div.div_filter div.checkbox {
+  justify-content: space-around;
+  align-content: center;
+  display: flex;
+}
+div.div_container div.div_filter div.checkbox div.checkbox_container {
+  background-color: #e8e8e8;
+  display: inline-block;
+  border-radius: 20px;
+  align-self: center;
+  width: 200px;
+  margin: 20px;
+  padding: 20px;
+}
+div.div_container div.div_filter div.checkbox div.checkbox_container div.list div {
   justify-content: space-between;
   align-items: center;
+  display: flex;
 }
 div.div_container div.div_filter button {
-  padding: 10px;
   margin: 5px 5px 0 5px;
+  padding: 10px;
 }
+
+/*Search*/
+
 div.div_container div.div_search * {
   display: inline-block;
   margin: 10px;
 }
-
 div.div_container div.div_search h1 {
   height: 60px;
   width: 180px;
 }
-
 div.div_container div.div_search a button {
   background-color: #98b871;
   border-radius: 10px;
@@ -64,11 +81,9 @@ div.div_container div.div_search a button {
   height: 60px;
   width: 60px;
 }
-
 div.div_container div.div_search button:hover {
   cursor: pointer;
 }
-
 div.div_container h3.error_message {
   font-size: 40px;
   margin: 40px;
