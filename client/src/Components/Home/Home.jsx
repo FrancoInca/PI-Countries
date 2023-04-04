@@ -32,18 +32,15 @@ const Home = (props) => {
     navigate(`/home/1${value ? `?name=${value}` : ''}${value ? '&' : '?'}${filtersParam}`);
     setMounted(!mounted);
   };
-  const filterCountries = (c, array = [...activitiesList]) => {
+  const filterCountries = (c, array) => {
     const activitiesName = c.Activities.map((e) => e.name);
     const allActivities = array.map((e) => e.name);
-    const filterActivities = [...filters];
-    const hasActivities = filterActivities.some((activities) => allActivities.includes(activities));
-    const hasContinent = filterActivities.some((continent) => continents.includes(continent));
+    const hasActivities = filters.some((activities) => allActivities.includes(activities));
+    const hasContinent = filters.some((continent) => continents.includes(continent));
     if (hasActivities && hasContinent)
-      return (
-        filterActivities.some((activities) => activitiesName.includes(activities)) && filters.includes(c.continent)
-      );
-    if (hasActivities) return filterActivities.some((activities) => activitiesName.includes(activities));
-    if (hasContinent) return filters.includes(c.continent);
+      return filters.some((activities) => activitiesName.includes(activities)) && filters.includes(c.continent);
+    if (hasActivities) return filters.some((activities) => activitiesName.includes(activities));
+    return filters.includes(c.continent);
   };
   const handleFilterChange = (event) => {
     const filter = event.target.value;
@@ -89,7 +86,8 @@ const Home = (props) => {
     //eslint-disable-next-line
   }, [mounted]);
 
-  const filteredCountries = filters.length > 0 ? countries.filter((c) => filterCountries(c)) : countries;
+  const filteredCountries =
+    filters.length > 0 ? countries.filter((c) => filterCountries(c, activitiesList)) : countries;
   const items = [...filteredCountries].splice((page - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE);
   const filter_style = {
     display: showFilters.display,
