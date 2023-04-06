@@ -4,6 +4,18 @@ const LOAD_COUNTRIES = 'LOAD_COUNTRIES';
 const LOAD_SOME_COUNTRIES = 'LOAD_SOME_COUNTRIES';
 const LOAD_COUNTRY = 'LOAD_COUNTRY';
 const LOAD_ACTIVITIES = 'LOAD_ACTIVITIES';
+const ADD_ACTIVITY = 'ADD_ACTIVITY';
+
+export function addActivity(data) {
+  return async function (dispatch) {
+    const response = await axios.post(`http://localhost:3001/activities`, data);
+    const activity = response.data;
+    return dispatch({
+      type: ADD_ACTIVITY,
+      payload: activity,
+    });
+  };
+}
 
 export function loadActivities() {
   return async function (dispatch) {
@@ -52,4 +64,4 @@ export function loadSomeCountries() {
     });
   };
 }
-export {LOAD_COUNTRIES, LOAD_SOME_COUNTRIES, LOAD_COUNTRY, LOAD_ACTIVITIES};
+export {LOAD_COUNTRIES, LOAD_SOME_COUNTRIES, LOAD_COUNTRY, LOAD_ACTIVITIES, ADD_ACTIVITY};
