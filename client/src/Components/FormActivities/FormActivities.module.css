@@ -1,0 +1,85 @@
+.container {
+  justify-content: center;
+  text-align: center;
+  font-size: 20px;
+  width: 100%;
+}
+.container p {
+  margin: 15px;
+}
+.container input {
+  margin: 0 15px;
+}
+.container button:hover {
+  cursor: pointer;
+}
+.container input.text_input {
+  border-radius: 15px;
+  max-width: 300px;
+  font-size: 20px;
+  padding: 10px;
+  height: 30px;
+  margin: 10px;
+  text-align: center;
+}
+
+.container .change_page {
+  justify-content: center;
+  margin-bottom: 20px;
+  align-items: center;
+  display: flex;
+}
+.container .change_page div {
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  display: flex;
+}
+.container .change_page button {
+  background-color: #98b871;
+  border-radius: 7px;
+  color: #e8e8e8;
+  height: 30px;
+  width: 30px;
+}
+.container .change_page button.submit {
+  background-color: #98b871;
+  border-radius: 10px;
+  height: fit-content;
+  width: fit-content;
+  color: #e8e8e8;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.container .countries_container {
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.container .countries_container div {
+  display: inline;
+}
+.container .countries_container div button {
+  background-color: white;
+  border-radius: 15px;
+  max-height: 190px;
+  margin: 20px 20px;
+  font-size: 20px;
+  width: 250px;
+}
+.container .countries_container div div {
+  font-size: 15px;
+  padding: 0;
+}
+.container .countries_container div button img {
+  border-radius: 15px;
+  height: 140px;
+  width: 250px;
+}
+
+@media screen and (max-width: 520px) {
+  .container .change_page {
+    display: block;
+  }
+}
