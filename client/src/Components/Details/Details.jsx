@@ -31,7 +31,7 @@ const Details = ({loadCountryByCC, countryData}) => {
           ) : (
             <h1>There is no activities for {data.name} right now...</h1>
           )}
-          <Activities props={data} />
+          <Activities props={data.Activities} />
         </>
       ) : null}
     </div>

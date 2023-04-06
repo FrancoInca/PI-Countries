@@ -5,7 +5,7 @@ import Styles from './Activities.module.css';
 const Activities = ({props}) => {
   return (
     <div className={Styles.container}>
-      {props.Activities.map((e) => (
+      {props.map((e) => (
         <Activity data={e} key={e.id} />
       ))}
     </div>
