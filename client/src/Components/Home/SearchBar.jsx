@@ -17,6 +17,9 @@ const Searchbar = ({countries}) => {
   const prevPageValue = prevPage();
   return (
     <>
+      <Link to={`/home/1${search}`}>
+        <button>{'<<'}</button>
+      </Link>
       <Link to={`/home/${prevPageValue}${search}`}>
         <button>{'<'}</button>
       </Link>
@@ -25,6 +28,9 @@ const Searchbar = ({countries}) => {
       </h1>
       <Link to={`/home/${nextPageValue}${search}`}>
         <button>{'>'}</button>
+      </Link>
+      <Link to={`/home/${arrayLength / 10}${search}`}>
+        <button>{'>>'}</button>
       </Link>
     </>
   );

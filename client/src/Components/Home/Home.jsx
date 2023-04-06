@@ -1,78 +1,100 @@
-import React, {useEffect, useState} from 'react';
-import Cards from '../Cards/Cards';
-import Styles from './Home.module.css';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import {loadCountries, loadActivities} from '../../redux/actions';
+import CheckBoxList from './filters/CheckBoxList';
+import React, {useEffect, useState} from 'react';
+import GoToTopButton from '../goToTop/goToTop';
+import Styles from './Home.module.css';
 import Searchbar from './SearchBar';
 import {connect} from 'react-redux';
-import {loadCountries, loadActivities} from '../../redux/actions';
-import GoToTopButton from '../goToTop/goToTop';
+import Cards from '../Cards/Cards';
 
 const ITEMS_PER_PAGE = 10;
 
 const Home = (props) => {
-  const {page} = useParams();
-  const {search} = useLocation();
+  //Constants
+
   const navigate = useNavigate();
+  const {search} = useLocation();
+  const {page} = useParams();
 
   const query = new URLSearchParams(search);
-  const countryName = query.get('name');
   const filterURL = query.get('filters');
+  const countryName = query.get('name');
 
   const [showFilters, setShowFilters] = useState({display: 'none', message: 'Show Filters'});
   const [searchInput, setSearchInput] = useState(countryName || '');
   const [inputCache, setInputCache] = useState(countryName || '');
   const [activitiesList, setActivitesList] = useState([]);
   const [countries, setCountries] = useState([]);
-  const [filters, setFilters] = useState([]);
   const [mounted, setMounted] = useState(true);
+  const [filters, setFilters] = useState([]);
+
   const continents = ['Africa', 'Antarctica', 'South America', 'North America', 'Asia', 'Europe', 'Oceania'];
+  const allActivitiesName = props.activities.map((e) => e.name);
+  const items = [...countries].splice((page - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE);
+  const filter_style = {
+    display: showFilters.display,
+  };
+  const hasActivities = filters.some((activities) => allActivitiesName.includes(activities));
+  const hasContinent = filters.some((continent) => continents.includes(continent));
+
+  //Functions
 
   const inputGoTo = (value) => {
     const filtersParam = filters.length > 0 ? `filters=${filters.join(',')}` : '';
     navigate(`/home/1${value ? `?name=${value}` : ''}${value ? '&' : '?'}${filtersParam}`);
     setMounted(!mounted);
   };
-  const filterCountries = (c, array) => {
+
+  const filterCountries = (c) => {
     const activitiesName = c.Activities.map((e) => e.name);
-    const allActivities = array.map((e) => e.name);
-    const hasActivities = filters.some((activities) => allActivities.includes(activities));
-    const hasContinent = filters.some((continent) => continents.includes(continent));
     if (hasActivities && hasContinent)
       return filters.some((activities) => activitiesName.includes(activities)) && filters.includes(c.continent);
     if (hasActivities) return filters.some((activities) => activitiesName.includes(activities));
     return filters.includes(c.continent);
   };
+
   const handleFilterChange = (event) => {
-    const filter = event.target.value;
+    const value = event.target.value;
     const searchParams = searchInput ? `?name=${searchInput}` : '';
     let filtersParam;
     let newFilterArray = [];
     if (event.target.checked) {
-      newFilterArray = [...filters, filter];
+      newFilterArray = [...filters, value];
       filtersParam = `filters=${newFilterArray.join(',')}`;
     } else {
-      newFilterArray = filters.filter((f) => f !== filter);
-      filtersParam = newFilterArray.length > 0 ? `filters=${newFilterArray.join(',')}` : '';
+      newFilterArray = filters.filter((f) => f !== value);
+      filtersParam = newFilterArray.length ? `filters=${newFilterArray.join(',')}` : '';
     }
     setFilters(newFilterArray);
-    navigate(`/home/1${searchParams}${searchInput ? '&' : '?'}${filtersParam}`);
+    navigate(`/home/1${searchParams ? `${searchParams}&` : '?'}${filtersParam}`);
     setMounted(!mounted);
+  };
+  const showHideFilters = () => {
+    if (showFilters.display === 'none') setShowFilters({display: 'block', message: 'Hide filters'});
+    else setShowFilters({display: 'none', message: 'Show filters'});
+  };
+  const clearFilters = () => {
+    if (filters.length) {
+      setFilters([]);
+      navigate(`/home/1${countryName ? `?search=${countryName}` : ''}`);
+      setMounted(!mounted);
+    }
   };
 
   useEffect(() => {
     const countriesToState = async () => {
       try {
-        if (countries.length === 0 || inputCache !== searchInput) {
+        if (!props.countries.length || inputCache !== searchInput) {
           await props.loadCountries(countryName || '');
           setInputCache(searchInput);
         }
-        let filteredCountries = props.countries;
-        if (activitiesList.length === 0) {
+        if (!activitiesList.length) {
           await props.loadActivities();
           setActivitesList(props.activities);
         }
-        let activities = props.activities;
-        if (filters.length > 0) filteredCountries = filteredCountries.filter((c) => filterCountries(c, activities));
+        let filteredCountries = props.countries;
+        if (filters.length) filteredCountries = filteredCountries.filter((c) => filterCountries(c));
         setCountries(filteredCountries);
         setMounted(false);
       } catch (error) {
@@ -81,20 +103,10 @@ const Home = (props) => {
         setMounted(true);
       }
     };
-    filterURL ? setFilters(filterURL.split(',')) : setFilters([...filters]);
+    if (filterURL) setFilters(filterURL.split(','));
     countriesToState();
     //eslint-disable-next-line
   }, [mounted]);
-
-  const filteredCountries =
-    filters.length > 0 ? countries.filter((c) => filterCountries(c, activitiesList)) : countries;
-  const items = [...filteredCountries].splice((page - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE);
-  const filter_style = {
-    display: showFilters.display,
-  };
-  const activityFilterStyle = {
-    display: activitiesList.length > 0 ? 'inline-block' : 'none',
-  };
 
   return (
     <div className={Styles.div_container}>
@@ -105,54 +117,23 @@ const Home = (props) => {
 
       <div className={Styles.div_filter} style={filter_style}>
         <div className={Styles.checkbox}>
-          <div className={Styles.checkbox_container}>
-            <h3>Continents</h3>
-            <div className={Styles.list}>
-              {continents.map((e) => (
-                <div key={e}>
-                  <label htmlFor={e}>{e}</label>
-                  <input type="checkbox" id={e} value={e} onChange={handleFilterChange} checked={filters.includes(e)} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className={Styles.checkbox_container} style={activityFilterStyle}>
-            <h3>Activities</h3>
-            <div className={Styles.list}>
-              {activitiesList.map((e) => (
-                <div key={e.name}>
-                  <label htmlFor={e.name}>{e.name}</label>
-                  <input
-                    type="checkbox"
-                    id={e.name}
-                    value={e.name}
-                    onChange={handleFilterChange}
-                    checked={filters.includes(e.name)}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          <CheckBoxList
+            continents={continents}
+            functionHandle={handleFilterChange}
+            filters={filters}
+            name={'Continents'}
+          />
+          <CheckBoxList
+            continents={allActivitiesName}
+            functionHandle={handleFilterChange}
+            filters={filters}
+            name={'Activities'}
+          />
         </div>
-        <button
-          onClick={() => {
-            if (filters.length > 0) {
-              setFilters([]);
-              navigate(`/home/1${countryName ? `?search=${countryName}` : ''}`);
-              setMounted(!mounted);
-            }
-          }}>
-          Clear filters
-        </button>
+        <button onClick={() => clearFilters()}>Clear filters</button>
       </div>
 
-      <button
-        className={Styles.button_SH_filters}
-        onClick={() => {
-          if (showFilters.display === 'none') setShowFilters({display: 'block', message: 'Hide filters'});
-          else setShowFilters({display: 'none', message: 'Show filters'});
-        }}>
+      <button className={Styles.button_SH_filters} onClick={() => showHideFilters()}>
         {showFilters.message}
       </button>
 
@@ -174,7 +155,7 @@ const Home = (props) => {
         <Cards props={items} />
       </div>
 
-      {!countries.length ? <h3 className={Styles.error_message}>The country {countryName} doesn't exist.</h3> : null}
+      {!countries.length && <h3 className={Styles.error_message}>The country {countryName} doesn't exist.</h3>}
 
       <GoToTopButton />
     </div>
