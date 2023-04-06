@@ -85,8 +85,8 @@ const Home = (props) => {
   useEffect(() => {
     const countriesToState = async () => {
       try {
+        await props.loadCountries(countryName || '');
         if (!props.countries.length || inputCache !== searchInput) {
-          await props.loadCountries(countryName || '');
           setInputCache(searchInput);
         }
         if (!activitiesList.length) {
@@ -114,7 +114,6 @@ const Home = (props) => {
       <div className={Styles.div_search}>
         <Searchbar countries={countries.length} />
       </div>
-
       <div className={Styles.div_filter} style={filter_style}>
         <div className={Styles.checkbox}>
           <CheckBoxList
@@ -132,11 +131,9 @@ const Home = (props) => {
         </div>
         <button onClick={() => clearFilters()}>Clear filters</button>
       </div>
-
       <button className={Styles.button_SH_filters} onClick={() => showHideFilters()}>
         {showFilters.message}
       </button>
-
       <form>
         <input
           type="text"
@@ -150,13 +147,10 @@ const Home = (props) => {
           }}
         />
       </form>
-
       <div className={Styles.div_home_cards}>
         <Cards props={items} />
       </div>
-
       {!countries.length && <h3 className={Styles.error_message}>The country {countryName} doesn't exist.</h3>}
-
       <GoToTopButton />
     </div>
   );

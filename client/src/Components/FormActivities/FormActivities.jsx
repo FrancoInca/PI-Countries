@@ -45,18 +45,11 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
 
   const validate = (values) => {
     const errors = {};
-    if (!values.name) {
-      errors.name = 'Activity must have a name';
-    }
-    if (1 > values.difficulty || values.difficulty > 5 || !values.difficulty) {
+    if (!values.name) errors.name = 'Activity must have a name';
+    if (1 > values.difficulty || values.difficulty > 5 || !values.difficulty)
       errors.difficulty = 'Activity must have a difficulty between 1 and 5';
-    }
-    if (!values.season) {
-      errors.season = 'Activity must have a season';
-    }
-    if (!values.CountryID) {
-      errors.CountryID = 'Activity must have at least one country';
-    }
+    if (!values.season) errors.season = 'Activity must have a season';
+    if (!values.CountryID) errors.CountryID = 'Activity must have at least one country';
     return errors;
   };
 

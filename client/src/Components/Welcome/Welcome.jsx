@@ -2,21 +2,25 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import Styles from './Welcome.module.css';
 import Cards from '../Cards/Cards';
-import {loadSomeCountries} from '../../redux/actions';
+import {loadSomeCountries, loadActivities} from '../../redux/actions';
 import GoToTopButton from '../goToTop/goToTop';
 import Detail from '../Details/Detail';
+import Activities from '../Activities/Activities';
 
 const Welcome = (props) => {
   const [countries, setCountries] = useState([]);
+  const [activites, setActivities] = useState([]);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const countriesToState = async () => {
       await props.loadSomeCountries();
+      await props.loadActivities();
       setMounted(true);
     };
     if (!mounted) countriesToState();
     setCountries(props.countriesWelcome);
+    setActivities(props.activities);
     //eslint-disable-next-line
   }, [mounted]);
   return (
@@ -45,22 +49,23 @@ const Welcome = (props) => {
           <div className={Styles.div__img}>{countries[1] ? <Detail data={countries[1]} /> : null}</div>
         </div>
         <div className={Styles.last_container}>
-          <h1 className={Styles.third__h1}>Make plans for the best trip in your life!</h1>
-          <div className={Styles.div__img}>
-            <img src="https://i.imgur.com/zJucG8M.png" alt="placeholder" />
-          </div>
+          <h1 className={Styles.third__h1}>Choose the activities you want!</h1>
         </div>
+        <Activities props={activites} />
       </div>
     </>
   );
 };
 export function mapStateToProps(state) {
-  return {countriesWelcome: state.countriesWelcome};
+  return {countriesWelcome: state.countriesWelcome, activities: state.activities};
 }
 export function mapDispatchToProps(dispatch) {
   return {
     loadSomeCountries: function () {
       return dispatch(loadSomeCountries());
+    },
+    loadActivities: function () {
+      return dispatch(loadActivities());
     },
   };
 }
