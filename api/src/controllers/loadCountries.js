@@ -18,9 +18,9 @@ async function loadCountries(req, res) {
     const data = response.data.map((e) => saveData(e));
     await data.forEach((e) => Country.create(e));
     console.log('DataBase has been fully updated');
-    res.status(200).json({status: 'Fine'});
+    res.status(201).json({status: 'Fine'});
   } catch (err) {
-    res.status(400).send('The database has an error ' + err.message);
+    res.status(409).send('The database has an error ' + err.message);
   }
 }
 

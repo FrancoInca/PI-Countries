@@ -5,7 +5,7 @@ async function getAllCountries(req, res) {
     const DBResponse = await Country.findAll({include: Activity});
     res.status(200).json(DBResponse);
   } catch (err) {
-    res.status(200).send(err.message);
+    res.status(404).send(err.message);
   }
 }
 

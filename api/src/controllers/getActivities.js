@@ -5,7 +5,7 @@ const getActivities = async (req, res) => {
     const DBActivities = await Activity.findAll({include: Country});
     res.status(200).json(DBActivities);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(404).send(err.message);
   }
 };
 

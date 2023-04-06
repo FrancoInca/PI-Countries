@@ -9,7 +9,7 @@ const postActivity = async (req, res) => {
     countries.map((e) => newActivity.addCountry(e));
     return res.status(201).json(newActivity);
   } catch (err) {
-    res.status(401).send(err.message);
+    res.status(409).send(err.message);
   }
 };
 
