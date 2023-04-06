@@ -13,6 +13,12 @@
 .container button:hover {
   cursor: pointer;
 }
+.container ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+}
 .container input.text_input {
   border-radius: 15px;
   max-width: 300px;

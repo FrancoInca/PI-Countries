@@ -11,8 +11,8 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
   const [searchInput, setSearchInput] = useState('');
   const [difficulty, setDifficulty] = useState('');
   const [errorList, setErrorList] = useState({});
-  const [season, setSeason] = useState('');
   const [mounted, setMounted] = useState(false);
+  const [season, setSeason] = useState('');
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -20,12 +20,12 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
       await loadCountries();
     };
     if (!countries.length) getCountries();
-    console.log('useEffect');
     //eslint-disable-next-line
   }, [mounted]);
 
   const totalCountries = searchInput ? [...countries].filter((e) => e.name.includes(searchInput)) : [...countries];
   const items = [...totalCountries].splice(page * 5, 5);
+  const seasons = ['Summer', 'Autumn', 'Winter', 'Spring'];
 
   const nextPage = () => {
     if ((page + 1) * 5 < countries.length) setPage(page + 1);
@@ -80,11 +80,10 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
       setMounted(!mounted);
       setSubmitMessage('The activity has been added');
     } catch (err) {
-      console.log(err.message);
+      console.log(err.response.status);
       console.log(err.response.data);
       setErrorList({});
-      if (err.response.data.includes('restricción de unicidad'))
-        setSubmitMessage(`The activity "${activity.name}" already exist.`);
+      if (err.response.status === 409) setSubmitMessage(`The activity "${activity.name}" already exist.`);
       setMounted(!mounted);
     }
   };
@@ -103,9 +102,11 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
             className={Styles.text_input}
             placeholder="Activity Name"
           />
+
           {errorList.name && <p style={{color: 'red', fontSize: '15px'}}>{errorList.name}</p>}
 
           <p>Choose the difficulty:</p>
+
           <input
             type="number"
             name="difficulty"
@@ -120,19 +121,18 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
             className={Styles.text_input}
             placeholder="1"
           />
+
           {errorList.difficulty && <p style={{color: 'red', fontSize: '15px'}}>{errorList.difficulty}</p>}
 
           <p>Choose the season:</p>
-          <div>
-            <input type="radio" id="Summer" name="season" value="Summer" onChange={(e) => setSeason(e.target.value)} />
-            <label htmlFor="Summer">Summer</label>
-            <input type="radio" id="Autumn" name="season" value="Autumn" onChange={(e) => setSeason(e.target.value)} />
-            <label htmlFor="Autumn">Autumn</label>
-            <input type="radio" id="Winter" name="season" value="Winter" onChange={(e) => setSeason(e.target.value)} />
-            <label htmlFor="Winter">Winter</label>
-            <input type="radio" id="Spring" name="season" value="Spring" onChange={(e) => setSeason(e.target.value)} />
-            <label htmlFor="Spring">Spring</label>
-          </div>
+          <ul>
+            {seasons.map((e) => (
+              <li key={e}>
+                <input type="radio" id={e} name="season" value={e} onChange={(ev) => setSeason(ev.target.value)} />
+                <label htmlFor={e}>{e}</label>
+              </li>
+            ))}
+          </ul>
 
           {errorList.season && <p style={{color: 'red', fontSize: '15px'}}>{errorList.season}</p>}
           <p>Choose the Countries:</p>
@@ -168,8 +168,11 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
               Submit
             </button>
           </div>
+
           {errorList.countries && <p style={{color: 'red', fontSize: '15px'}}>{errorList.countries}</p>}
+
           {countriesAdded.id.length !== 0 && <p>Countries you are adding: {countriesAdded.name.join(', ')}</p>}
+
           <div className={Styles.countries_container}>
             {items.map((e) => (
               <div key={e.id}>
@@ -187,6 +190,7 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
             ))}
           </div>
         </form>
+
         {submitMessage && <h1 style={{marginBottom: '40px', color: '#98b871'}}>{submitMessage}</h1>}
       </div>
     </div>
