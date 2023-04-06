@@ -1,0 +1,28 @@
+.div_footbar {
+  background-color: #98b871;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  margin-top: auto;
+  display: flex;
+  width: 100%;
+  bottom: 0;
+}
+.div_footbar * {
+  color: #e8e8e8;
+}
+.div_footbar h1 {
+  margin-top: 20px;
+  font-size: 40px;
+}
+.div_footbar div {
+  margin: 20px;
+}
+.div_footbar div p {
+  display: inline;
+  margin: 15px;
+}
+.div_footbar div p:hover {
+  cursor: pointer;
+}
