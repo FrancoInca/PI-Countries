@@ -34,7 +34,7 @@ div.div_container div.div_filter {
   align-items: center;
   border-radius: 20px;
   width: fit-content;
-  max-width: 500px;
+  max-width: 1200px;
   display: flex;
   padding: 20px;
   margin: auto;
@@ -96,6 +96,17 @@ div.div_home_cards {
 }
 
 /* Media queries */
+@media screen and (max-width: 890px) {
+  div.div_container {
+    margin: 10px;
+  }
+  div.div_container div.div_filter {
+    padding: 0 0 20px;
+  }
+  div.div_container div.div_filter div.checkbox {
+    display: block;
+  }
+}
 @media screen and (max-width: 600px) {
   div.container h1 {
     font-size: 30px;
