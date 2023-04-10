@@ -3,6 +3,7 @@ import {loadCountries, loadActivities} from '../../redux/actions';
 import CheckBoxList from './filters/CheckBoxList';
 import React, {useEffect, useState} from 'react';
 import GoToTopButton from '../goToTop/goToTop';
+import SortList from './filters/SortList';
 import Styles from './Home.module.css';
 import Searchbar from './SearchBar';
 import {connect} from 'react-redux';
@@ -20,10 +21,12 @@ const Home = (props) => {
   const query = new URLSearchParams(search);
   const filterURL = query.get('filters');
   const countryName = query.get('name');
+  const sorts = query.get('sort');
 
   const [showFilters, setShowFilters] = useState({display: 'none', message: 'Show Filters'});
   const [searchInput, setSearchInput] = useState(countryName || '');
   const [inputCache, setInputCache] = useState(countryName || '');
+  const [sortName, setSortName] = useState(sorts || 'a-z');
   const [activitiesList, setActivitesList] = useState([]);
   const [countries, setCountries] = useState([]);
   const [mounted, setMounted] = useState(true);
@@ -40,53 +43,94 @@ const Home = (props) => {
 
   //Functions
 
-  const inputGoTo = (value) => {
-    const filtersParam = filters.length > 0 ? `filters=${filters.join(',')}` : '';
-    navigate(`/home/1${value ? `?name=${value}` : ''}${value ? '&' : '?'}${filtersParam}`);
-    setMounted(!mounted);
-  };
-
-  const filterCountries = (c) => {
-    const activitiesName = c.Activities.map((e) => e.name);
+  const filterCountries = (country) => {
+    const activitiesName = country.Activities.map((e) => e.name);
     if (hasActivities && hasContinent)
-      return filters.some((activities) => activitiesName.includes(activities)) && filters.includes(c.continent);
+      return filters.some((activities) => activitiesName.includes(activities)) && filters.includes(country.continent);
     if (hasActivities) return filters.some((activities) => activitiesName.includes(activities));
-    return filters.includes(c.continent);
+    return filters.includes(country.continent);
   };
 
-  const handleFilterChange = (event) => {
-    const value = event.target.value;
-    const searchParams = searchInput ? `?name=${searchInput}` : '';
-    let filtersParam;
-    let newFilterArray = [];
-    if (event.target.checked) {
-      newFilterArray = [...filters, value];
-      filtersParam = `filters=${newFilterArray.join(',')}`;
-    } else {
-      newFilterArray = filters.filter((f) => f !== value);
-      filtersParam = newFilterArray.length ? `filters=${newFilterArray.join(',')}` : '';
-    }
-    setFilters(newFilterArray);
-    navigate(`/home/1${searchParams ? `${searchParams}&` : '?'}${filtersParam}`);
-    setMounted(!mounted);
+  const sortCountries = (array) => {
+    const Sorts = {
+      'a-z': () =>
+        array.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        }),
+      'z-a': () =>
+        array.sort((a, b) => {
+          if (a.name > b.name) return -1;
+          if (a.name < b.name) return 1;
+          return 0;
+        }),
+      morePopulation: () => array.sort((a, b) => b.population - a.population),
+      lessPopulation: () => array.sort((a, b) => a.population - b.population),
+    };
+    if (Sorts[sortName] !== undefined) return Sorts[sortName];
+    return array;
   };
+
+  const handleSorts = (value) => {
+    const urlSort = value !== 'a-z' ? `sort=${value}` : '';
+    const urlFilter = filterURL ? `filters=${filterURL}&` : '';
+    const urlName = countryName ? `name=${countryName}&` : '';
+    const hasParams = urlSort || urlFilter || urlName ? '?' : '';
+    navigate(`/home/1${hasParams}${urlName}${urlFilter}${urlSort}`);
+    setSortName(value);
+  };
+
+  const clearFilters = () => {
+    if (filters.length) {
+      setFilters([]);
+      const urlName = countryName ? `name=${countryName}&` : '';
+      const urlSort = sortName !== 'a-z' ? `sort=${sortName}` : '';
+      const hasParams = urlSort || urlName ? '?' : '';
+      navigate(`/home/1${hasParams}${urlName}${urlSort}`);
+      setMounted(!mounted);
+    }
+  };
+
   const showHideFilters = () => {
     if (showFilters.display === 'none') setShowFilters({display: 'block', message: 'Hide filters'});
     else setShowFilters({display: 'none', message: 'Show filters'});
   };
-  const clearFilters = () => {
-    if (filters.length) {
-      setFilters([]);
-      navigate(`/home/1${countryName ? `?search=${countryName}` : ''}`);
-      setMounted(!mounted);
+
+  const handleFilterChange = (event) => {
+    const value = event.target.value;
+    const urlName = searchInput ? `name=${searchInput}&` : '';
+    const urlSort = sortName !== 'a-z' ? `sort=${sortName}` : '';
+    let filtersParam;
+    let hasParams = '';
+    let newFilterArray = [];
+    if (event.target.checked) {
+      newFilterArray = [...filters, value];
+      filtersParam = `filters=${newFilterArray.join(',')}&`;
+    } else {
+      newFilterArray = filters.filter((f) => f !== value);
+      filtersParam = newFilterArray.length ? `filters=${newFilterArray.join(',')}&` : '';
     }
+    hasParams = urlName || urlSort !== 'a-z' || filtersParam ? '?' : '';
+    setFilters(newFilterArray);
+    navigate(`/home/1${hasParams}${urlName}${filtersParam}${urlSort}`);
+    setMounted(!mounted);
+  };
+
+  const inputGoTo = (value) => {
+    const urlName = value ? `name=${value}&` : '';
+    const urlFilters = filters.length > 0 ? `filters=${filters.join(',')}&` : '';
+    const urlSort = sortName !== 'a-z' ? `sort=${sortName}` : '';
+    const hasParams = value || urlFilters || sortName !== 'a-z' ? '?' : '';
+    navigate(`/home/1${hasParams}${urlName}${urlFilters}${urlSort}`);
+    setMounted(!mounted);
   };
 
   useEffect(() => {
     const countriesToState = async () => {
       try {
-        await props.loadCountries(countryName || '');
         if (!props.countries.length || inputCache !== searchInput) {
+          await props.loadCountries(countryName || '');
           setInputCache(searchInput);
         }
         if (!activitiesList.length) {
@@ -95,6 +139,7 @@ const Home = (props) => {
         }
         let filteredCountries = props.countries;
         if (filters.length) filteredCountries = filteredCountries.filter((c) => filterCountries(c));
+        filteredCountries = sortCountries(filteredCountries);
         setCountries(filteredCountries);
         setMounted(false);
       } catch (error) {
@@ -106,7 +151,7 @@ const Home = (props) => {
     if (filterURL) setFilters(filterURL.split(','));
     countriesToState();
     //eslint-disable-next-line
-  }, [mounted]);
+  }, [mounted, sortName]);
 
   return (
     <div className={Styles.div_container}>
@@ -116,18 +161,16 @@ const Home = (props) => {
       </div>
       <div className={Styles.div_filter} style={filter_style}>
         <div className={Styles.checkbox}>
-          <CheckBoxList
-            continents={continents}
-            functionHandle={handleFilterChange}
-            filters={filters}
-            name={'Continents'}
-          />
-          <CheckBoxList
-            continents={allActivitiesName}
-            functionHandle={handleFilterChange}
-            filters={filters}
-            name={'Activities'}
-          />
+          <CheckBoxList list={continents} functionHandle={handleFilterChange} filters={filters} name={'Continents'} />
+          <SortList functionHandler={handleSorts} sortName={sortName} />
+          {allActivitiesName.length !== 0 && (
+            <CheckBoxList
+              list={allActivitiesName}
+              functionHandle={handleFilterChange}
+              filters={filters}
+              name={'Activities'}
+            />
+          )}
         </div>
         <button onClick={() => clearFilters()}>Clear filters</button>
       </div>
