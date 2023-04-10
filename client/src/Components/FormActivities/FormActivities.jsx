@@ -70,6 +70,7 @@ const FormActivites = ({countries, loadCountries, addActivity}) => {
     try {
       await addActivity(activity);
       setErrorList({});
+      setCountries({id: [], name: []});
       setMounted(!mounted);
       setSubmitMessage('The activity has been added');
     } catch (err) {
